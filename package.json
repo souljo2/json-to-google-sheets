@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "flat": "5.0.2",
-    "googleapis": "59.0.0"
+    "googleapis": "39"
   }
 }

@@ -1,6 +1,6 @@
 # json-to-google-sheets
 ---
-| Using Sheets API for uploading/downloading JSON files.
+> Using Sheets API for uploading/downloading JSON files.
 
 ## Install
 ---
