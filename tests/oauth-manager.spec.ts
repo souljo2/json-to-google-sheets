@@ -7,20 +7,20 @@ describe('OAuthManager', () => {
   let oAuthManager: OAuthManager
 
   describe('constructor()', () => {
-    test('백업용 드라이브 주소를 생성자에 전달한 경우, Scope의 사이즈가 2여야 한다', () => {
-      oAuthManager = new OAuthManager('DUMMY_BACKUP_DRIVE_URL')
+    test('If the backup drive address is passed to the constructor, the scope size must be 2', () => {
+      oAuthManager = new OAuthManager('FakeBackupDriveURL')
       expect(oAuthManager.scopes.length).toBe(2)
       expect(oAuthManager.isBackupRequired).toBe(true)
     })
 
-    test('백업용 드라이브 주소를 생성자에 전달하지 않은 경우, Scope의 사이즈가 1여야 한다', () => {
+    test('If the backup drive address is not passed to the constructor, the scope size must be 2', () => {
       oAuthManager = new OAuthManager()
       expect(oAuthManager.scopes.length).toBe(1)
     })
   })
 
   describe('authorize()', () => {
-    test('AuthToken이 없는 경우, Prompt에서 입력을 받아야 한다.', () => {
+    test('It the auth token is not passed, CLI should be appered.', () => {
       const readlineSpy = jest.spyOn(readline, 'createInterface')
       const consoleSpy = jest.spyOn(console, 'info')
       const stdin = mockStdIn.stdin()
@@ -44,7 +44,7 @@ describe('OAuthManager', () => {
   })
 
   describe('invokeTask()', () => {
-    test('인증 과정을 거치지 않은 Client는 데이터에 접근할 수 없어야 한다.', () => {
+    test('Unauthorized client can not invoke the task', () => {
       const fakeTask = () => console.log('Do nothing')
       const unAuthorizedOAuthManager = new OAuthManager()
 
