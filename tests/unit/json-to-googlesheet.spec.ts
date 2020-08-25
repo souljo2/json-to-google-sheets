@@ -1,21 +1,21 @@
 import readline from 'readline'
 import mockStdIn from 'mock-stdin'
 
-import OAuthManager from '../src/OAuthManager'
+import JSONToGoogleSheet from '../../src/JSONToGoogleSheet'
 
-describe('OAuthManager', () => {
-  let oAuthManager: OAuthManager
+describe('JSONToGoogleSheet', () => {
+  let jsonToGoogleSheet: JSONToGoogleSheet
 
   describe('constructor()', () => {
     test('If the backup drive address is passed to the constructor, the scope size must be 2', () => {
-      oAuthManager = new OAuthManager('FakeBackupDriveURL')
-      expect(oAuthManager.scopes.length).toBe(2)
-      expect(oAuthManager.isBackupRequired).toBe(true)
+      jsonToGoogleSheet = new JSONToGoogleSheet('FakeBackupDriveURL')
+      expect(jsonToGoogleSheet.scopes.length).toBe(2)
+      expect(jsonToGoogleSheet.isBackupRequired).toBe(true)
     })
 
     test('If the backup drive address is not passed to the constructor, the scope size must be 2', () => {
-      oAuthManager = new OAuthManager()
-      expect(oAuthManager.scopes.length).toBe(1)
+      jsonToGoogleSheet = new JSONToGoogleSheet()
+      expect(jsonToGoogleSheet.scopes.length).toBe(1)
     })
   })
 
@@ -25,7 +25,7 @@ describe('OAuthManager', () => {
       const consoleSpy = jest.spyOn(console, 'info')
       const stdin = mockStdIn.stdin()
 
-      oAuthManager.authorize({
+      jsonToGoogleSheet.authorize({
         clientId: 'FakeClientId',
         clientSecret: 'FakeClientSecret',
         redirectUri: 'FakeRedirectURI'
@@ -46,7 +46,7 @@ describe('OAuthManager', () => {
   describe('invokeTask()', () => {
     test('Unauthorized client can not invoke the task', () => {
       const fakeTask = () => console.log('Do nothing')
-      const unAuthorizedOAuthManager = new OAuthManager()
+      const unAuthorizedOAuthManager = new JSONToGoogleSheet()
 
       expect(() => unAuthorizedOAuthManager.invokeTask(fakeTask)).toThrowError(new Error('Unauthorized'))
     })

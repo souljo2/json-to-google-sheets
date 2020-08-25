@@ -1,63 +1,62 @@
 import { google } from 'googleapis'
 import { OAuth2Client } from 'google-auth-library';
 
-import { JSONData } from './types'
+import { GoogleSheetFuncParam } from './types'
 
+const sheets = google.sheets('v4');
+const drive = google.drive('v3');
 /**
  * WIP
  * 
  * @param {string} sheetName 
  */
-export function isGoogleSheetExisted(sheetName: string) {
+export async function isSheetExisted(authClient: OAuth2Client, { sheetName }: GoogleSheetFuncParam) {
+  const request = {
+    q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '이거'`,
+    auth: authClient
+  };
 
-}
-
-/**
- * WIP 
- * 
- * @param {string} sheetName
- * @param {object} data
- */
-export function createGoogleSheet(sheetName: string, data: JSONData) {
-
-}
-
-/**
- * WIP
- * 
- * @param {string} sheetName 
- */
-export function deleteGoogleSheet(sheetName: string) {
-
-}
-
-/**
- * WIP 
- * 
- * @param {string} sheetName
- * @param {object} data
- */
-export function updateGoogleSheets(sheetName: string, data: JSONData) {
-
-}
-
-export function test(auth: OAuth2Client) {
-  const sheets = google.sheets({ version: 'v4', auth });
-  sheets.spreadsheets.values.get({
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
-  }, (err, res: any) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name, Major:');
-      // Print columns A and E, which correspond to indices 0 and 4.
-      rows.map((row: any) => {
-        console.log(`${row[0]}, ${row[4]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
+  try {
+    const response = await drive.files.list(request)
+    console.log(response)
+  } catch (e) {
+    console.log(e)
   }
-  )
+}
+
+/**
+ * WIP 
+ * 
+ * @param {string} sheetName
+ * @param {object} data
+ */
+export function createSheet(authClient: OAuth2Client, { sheetName, data }: GoogleSheetFuncParam) {
+}
+
+/**
+ * WIP
+ * 
+ * @param {string} sheetName 
+ */
+export function deleteSheet(authClient: OAuth2Client, { sheetName }: GoogleSheetFuncParam) {
+
+}
+
+/**
+ * WIP 
+ * 
+ * @param {string} sheetName
+ * @param {object} data
+ */
+export function updateSheets(authClient: OAuth2Client, { sheetName, data }: GoogleSheetFuncParam) {
+
+}
+
+/**
+ * WIP 
+ * 
+ * @param authClient 
+ */
+export function uploadJSONToDrive(authClient: OAuth2Client) {
+
 }

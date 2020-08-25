@@ -4,12 +4,16 @@ export type JSONData = {
   [key: string]: string | JSONData
 }
 
+export type WriteJSONFileOption = {
+  raw?: boolean
+}
+
 export const enum GoogleAPIScopes {
   SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets",
   DRIVE_SCOPE = "https://www.googleapis.com/auth/drive"
 }
 
-export type TaskFunction = (oAuth2Client: OAuth2Client) => void
+export type TaskFunction = (oAuth2Client: OAuth2Client, param?: any) => Promise<any>
 
 export type CredentialProps = {
   clientSecret: string
@@ -24,4 +28,9 @@ export type AuthTokenProps = {
   scope?: string;
   token_type?: string;
   id_token?: string;
+}
+
+export type GoogleSheetFuncParam = {
+  sheetName: string
+  data?: JSONData
 }

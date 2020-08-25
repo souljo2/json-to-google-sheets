@@ -4,7 +4,7 @@ import { OAuth2Client } from 'google-auth-library';
 
 import { GoogleAPIScopes, TaskFunction, CredentialProps, AuthTokenProps } from './types'
 
-class OAuthManager {
+class JSONToGoogleSheet {
   private _scopes: GoogleAPIScopes[] = [GoogleAPIScopes.SHEETS_SCOPE]
   private _oAuth2Client?: OAuth2Client
 
@@ -85,10 +85,10 @@ class OAuthManager {
    * 
    * @param {function} task
    */
-  public invokeTask(task: TaskFunction) {
+  public invokeTask(task: TaskFunction, param?: any) {
     if (!this._oAuth2Client) throw new Error('Unauthorized')
-    task(this._oAuth2Client)
+    return task(this._oAuth2Client, param)
   }
 }
 
-export default OAuthManager
+export default JSONToGoogleSheet

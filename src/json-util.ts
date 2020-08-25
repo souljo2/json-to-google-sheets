@@ -1,11 +1,7 @@
 import fs from 'fs'
 import flat from 'flat'
 
-import { JSONData } from './types'
-
-type WriteJSONFileOption = {
-  raw?: boolean
-}
+import { JSONData, WriteJSONFileOption } from './types'
 
 /**
  * Get flattened JSON data
