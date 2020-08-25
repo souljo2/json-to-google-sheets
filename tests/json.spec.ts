@@ -6,35 +6,20 @@ import { getFlattedJSON, writeJSONFile } from '../src/json-util'
 import { JSONData } from '../src/types'
 
 describe('json-util', () => {
-  const filePathForTest = path.resolve(__dirname, './test.json')
+  const filePathForTest = path.resolve(__dirname, './data/json-test.json')
   const rawJSONDataForTest = fs.readFileSync(filePathForTest)
   const parsedJSONDataForTest = JSON.parse(rawJSONDataForTest.toString())
   const flattenedJSONDataForTest: JSONData = flat.flatten(parsedJSONDataForTest)
 
   describe('getFlattedJSON()', () => {
-
-    test('If no parameters have been passed, error should be occurred', () => {
-      const CustomError = new Error('Should provide either "data" or "filePath"')
-      expect(() => getFlattedJSON({})).toThrowError(CustomError)
-    })
-
-    test('If invalid filepath is passed as parameter, error should be occurred', () => {
-      const CustomError = new Error('File does not exist')
-      expect(() => getFlattedJSON({ filePath: './test1.json' })).toThrowError(CustomError)
-    })
-
-    test('If valid filepath is passed as parameter, JSON data should be flatted', () => {
-      expect(getFlattedJSON({ filePath: filePathForTest })).toStrictEqual(flattenedJSONDataForTest)
-    })
-
     test('If proper data is passed as parameter, JSON data should be flatted', () => {
-      expect(getFlattedJSON({ data: parsedJSONDataForTest })).toStrictEqual(flattenedJSONDataForTest)
+      expect(getFlattedJSON(parsedJSONDataForTest)).toStrictEqual(flattenedJSONDataForTest)
     })
   })
 
   describe('writeJSONFile()', () => {
-    const filePathForTestResult = path.resolve(__dirname, './test-result.json')
-    const filePathForRawTestResult = path.resolve(__dirname, './test-raw-result.json')
+    const filePathForTestResult = path.resolve(__dirname, './data/json-test-result.json')
+    const filePathForRawTestResult = path.resolve(__dirname, './data/json-test-raw-result.json')
 
     beforeEach(() => {
       // Remove previous test result

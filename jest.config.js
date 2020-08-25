@@ -11,4 +11,8 @@ module.exports = {
     "js",
     "json"
   ],
+  "automock": false,
+  "setupFiles": [
+    "./setupJest.js"
+  ]
 }
