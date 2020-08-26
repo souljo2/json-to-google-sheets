@@ -12,7 +12,7 @@ const drive = google.drive('v3');
  */
 export async function isSheetExisted(authClient: OAuth2Client, { sheetName }: GoogleSheetFuncParam) {
   const request = {
-    q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '이거'`,
+    q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${sheetName}'`,
     auth: authClient
   };
 

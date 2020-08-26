@@ -7,17 +7,18 @@ import { GoogleAPIScopes, TaskFunction, CredentialProps, AuthTokenProps } from '
 class JSONToGoogleSheet {
   private _scopes: GoogleAPIScopes[] = [GoogleAPIScopes.SHEETS_SCOPE]
   private _oAuth2Client?: OAuth2Client
+  private _isCachedTokenRequired: boolean
 
-  constructor(driveURL?: string) {
-    if (driveURL) this._scopes.push(GoogleAPIScopes.DRIVE_SCOPE)
+  constructor(isCachedTokenRequired = false) {
+    this._isCachedTokenRequired = isCachedTokenRequired
   }
 
   get scopes(): GoogleAPIScopes[] {
     return this._scopes
   }
 
-  get isBackupRequired(): boolean {
-    return this._scopes.length === 2
+  get isCachedTokenRequired(): boolean {
+    return this._isCachedTokenRequired
   }
 
   set oAuth2Client(oAuth2Client: OAuth2Client) {

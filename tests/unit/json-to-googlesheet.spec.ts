@@ -7,15 +7,14 @@ describe('JSONToGoogleSheet', () => {
   let jsonToGoogleSheet: JSONToGoogleSheet
 
   describe('constructor()', () => {
-    test('If the backup drive address is passed to the constructor, the scope size must be 2', () => {
-      jsonToGoogleSheet = new JSONToGoogleSheet('FakeBackupDriveURL')
-      expect(jsonToGoogleSheet.scopes.length).toBe(2)
-      expect(jsonToGoogleSheet.isBackupRequired).toBe(true)
+    test('If IsCachedTokenRequired is false, getter should return false', () => {
+      jsonToGoogleSheet = new JSONToGoogleSheet()
+      expect(jsonToGoogleSheet.isCachedTokenRequired).toBe(false)
     })
 
-    test('If the backup drive address is not passed to the constructor, the scope size must be 2', () => {
-      jsonToGoogleSheet = new JSONToGoogleSheet()
-      expect(jsonToGoogleSheet.scopes.length).toBe(1)
+    test('If IsCachedTokenRequired is true, getter should return true', () => {
+      jsonToGoogleSheet = new JSONToGoogleSheet(true)
+      expect(jsonToGoogleSheet.isCachedTokenRequired).toBe(true)
     })
   })
 
@@ -45,7 +44,7 @@ describe('JSONToGoogleSheet', () => {
 
   describe('invokeTask()', () => {
     test('Unauthorized client can not invoke the task', () => {
-      const fakeTask = () => console.log('Do nothing')
+      const fakeTask = () => Promise.resolve(() => console.log('Do nothing'))
       const unAuthorizedOAuthManager = new JSONToGoogleSheet()
 
       expect(() => unAuthorizedOAuthManager.invokeTask(fakeTask)).toThrowError(new Error('Unauthorized'))
