@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "ts-node tests/index.ts",
-    "test": "jest",
+    "test:e2e": "ts-node tests/e2e/index.ts",
+    "test:unit": "jest",
     "prebuild": "yarn lint",
     "build": "npx rollup -c",
     "lint": "eslint --fix --ext ts src"

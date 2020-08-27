@@ -13,7 +13,7 @@ describe('JSONToGoogleSheet', () => {
     })
 
     test('If IsCachedTokenRequired is true, getter should return true', () => {
-      jsonToGoogleSheet = new JSONToGoogleSheet(true)
+      jsonToGoogleSheet = new JSONToGoogleSheet({ isCachedTokenRequired: true })
       expect(jsonToGoogleSheet.isCachedTokenRequired).toBe(true)
     })
   })

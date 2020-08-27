@@ -34,3 +34,7 @@ export type GoogleSheetFuncParam = {
   sheetName: string
   data?: JSONData
 }
+
+export type JSONToGoogleSheetParam = {
+  isCachedTokenRequired: boolean
+}

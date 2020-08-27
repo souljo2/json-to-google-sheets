@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dummy page</title>
+  <style type="text/css">
+    .wrapper {
+      background: #eee;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #000;
+      border-radius: 6px;
+    }
+
+    #code {
+      background-color: #fff;
+      padding: 12px;
+      font-size: 0.8rem;
+      border: 1px solid #999;
+      border-radius: 6px;
+    }
+
+    #confirm {
+      text-align: center;
+      width: 200px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 6px;
+      background-color: #2196F3;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <p id="code"></p>
+    <div id="confirm">COPY</div>
+  </div>
+  <script type="text/javascript">
+    function init() {
+      const codeText = document.getElementById( 'code' )
+      const confirmButton = document.getElementById( 'confirm' )
+      const code = ( /code=(.+)&/.exec( window.document.location.search ) )[ 1 ]
+
+      // Set Text
+      codeText.innerText = code
+
+      // Set close evt handler
+      confirmButton.addEventListener( 'click', function () {
+        const copy = function ( e ) {
+          e.preventDefault();
+          if ( e.clipboardData ) {
+            e.clipboardData.setData( 'text/plain', code );
+          } else if ( window.clipboardData ) {
+            window.clipboardData.setData( 'Text', code );
+          }
+        }
+
+        // Exec copy
+        window.addEventListener( 'copy', copy );
+        document.execCommand( 'copy' );
+        window.removeEventListener( 'copy', copy );
+
+        alert('Code copied')
+      } )
+    }
+
+    window.addEventListener( "load", init );
+  </script>
+</body>
+
+</html>

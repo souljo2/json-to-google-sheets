@@ -1,5 +1,8 @@
 node_modules/
 token.json
-credentials.json
-tests/data
-tests/index.ts
+
+tests/unit/json-test.json
+tests/unit/json-test-result.json
+tests/unit/json-test-raw-result.json
+
+tests/e2e/credential.json
