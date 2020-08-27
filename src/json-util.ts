@@ -22,9 +22,15 @@ export function getFlattedJSON(jsonData: JSONData): JSONData {
 export function writeJSONFile(filePath: string, jsonData: JSONData, options?: WriteJSONFileOption): void {
   if (fs.existsSync(filePath)) throw new Error('The file alreay exists')
 
-  if (options && options.raw) {
-    fs.writeFileSync(filePath, JSON.stringify(jsonData), 'utf-8');
-    return
+  if (options) {
+    if (options.update) {
+      fs.unlinkSync(filePath);
+    }
+
+    if (options.raw) {
+      fs.writeFileSync(filePath, JSON.stringify(jsonData), 'utf-8');
+      return
+    }
   }
 
   const falttenedJSONData = flat.unflatten(jsonData, { object: true })

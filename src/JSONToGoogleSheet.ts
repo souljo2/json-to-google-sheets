@@ -122,7 +122,7 @@ class JSONToGoogleSheet {
    * 
    * @returns {Promise}
    */
-  public invokeTask(task: TaskFunction, param?: any) {
+  public invokeTask<T>(task: TaskFunction<T>, param?: any) {
     if (!this._oAuth2Client) throw new Error('Unauthorized')
     return task(this._oAuth2Client, param)
   }

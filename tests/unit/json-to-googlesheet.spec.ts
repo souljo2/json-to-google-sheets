@@ -7,14 +7,14 @@ describe('JSONToGoogleSheet', () => {
   let jsonToGoogleSheet: JSONToGoogleSheet
 
   describe('constructor()', () => {
-    test('If IsCachedTokenRequired is false, getter should return false', () => {
-      jsonToGoogleSheet = new JSONToGoogleSheet()
-      expect(jsonToGoogleSheet.isCachedTokenRequired).toBe(false)
-    })
-
     test('If IsCachedTokenRequired is true, getter should return true', () => {
       jsonToGoogleSheet = new JSONToGoogleSheet({ isCachedTokenRequired: true })
       expect(jsonToGoogleSheet.isCachedTokenRequired).toBe(true)
+    })
+
+    test('If IsCachedTokenRequired is false, getter should return false', () => {
+      jsonToGoogleSheet = new JSONToGoogleSheet()
+      expect(jsonToGoogleSheet.isCachedTokenRequired).toBe(false)
     })
   })
 
@@ -29,6 +29,7 @@ describe('JSONToGoogleSheet', () => {
         clientSecret: 'FakeClientSecret',
         redirectUri: 'FakeRedirectURI'
       })
+
       expect(readlineSpy).toHaveBeenCalled();
       expect(consoleSpy).toHaveBeenCalled()
 

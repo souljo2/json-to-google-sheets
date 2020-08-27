@@ -1,0 +1,9 @@
+{
+  "greet": {
+    "hello": "안녕",
+    "bye": {
+      "good_bye": "잘가",
+      "have_a_gday": "좋은 하루 보내"
+    }
+  }
+}

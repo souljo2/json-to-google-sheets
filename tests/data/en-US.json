@@ -1,0 +1,17 @@
+{
+  "greet": {
+    "hello": "Hello",
+    "bye": {
+      "good_bye": "Good bye",
+      "have_a_gday": "Have a good day"
+    }
+  },
+  "time": {
+    "hour": "Hour",
+    "minute": "Minute",
+    "second": {
+      "second": "Second",
+      "milli": "milliseconds"
+    }
+  }
+}

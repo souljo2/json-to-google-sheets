@@ -1,8 +1,7 @@
 node_modules/
 token.json
 
-tests/unit/json-test.json
-tests/unit/json-test-result.json
-tests/unit/json-test-raw-result.json
+tests/data/en-US-result.json
+tests/data/en-US-raw-result.json
 
 tests/e2e/credential.json
