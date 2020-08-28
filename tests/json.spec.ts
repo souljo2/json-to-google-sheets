@@ -2,11 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import flat from 'flat'
 
-import { getFlattedJSON, writeJSONFile } from '../../src/json-util'
-import { JSONData } from '../../src/types'
+import { getFlattedJSON, writeJSONFile } from '../src/json-util'
+import { JSONData } from '../src/types'
 
 describe('json-util', () => {
-  const filePathForTest = path.resolve(__dirname, '../data/en-US.json')
+  const filePathForTest = path.resolve(__dirname, './res/en-US.json')
   const rawJSONDataForTest = fs.readFileSync(filePathForTest)
   const parsedJSONDataForTest = JSON.parse(rawJSONDataForTest.toString())
   const flattenedJSONDataForTest: JSONData = flat.flatten(parsedJSONDataForTest)
@@ -18,8 +18,8 @@ describe('json-util', () => {
   })
 
   describe('writeJSONFile()', () => {
-    const filePathForTestResult = path.resolve(__dirname, '../data/en-US-result.json')
-    const filePathForRawTestResult = path.resolve(__dirname, '../data/en-US-raw-result.json')
+    const filePathForTestResult = path.resolve(__dirname, './res/en-US-result.json')
+    const filePathForRawTestResult = path.resolve(__dirname, './res/en-US-raw-result.json')
 
     beforeEach(() => {
       // Remove previous test result

@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import http from 'http'
 
+export type Server = http.Server
+
 /**
  * Run http server for using Google oAuth
  * 
@@ -12,7 +14,7 @@ export function runHTTPServer() {
     const { url } = request;
 
     if (!!url && url.indexOf('check')) {
-      const pagePath = path.resolve(__dirname, './index.html')
+      const pagePath = path.resolve(__dirname, './res/index.html')
       const page = fs.readFileSync(pagePath)
       response.write(page);
     }

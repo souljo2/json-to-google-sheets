@@ -1,91 +1,96 @@
-import { google } from 'googleapis'
+import { google, drive_v3, sheets_v4 } from 'googleapis'
 import { OAuth2Client } from 'google-auth-library';
-
-import { GoogleSheetFuncParam } from './types'
 
 const sheets = google.sheets('v4');
 const drive = google.drive('v3');
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Drive API
+
 /**
- * WIP
+ * Get filelist from drive
  * 
- * @param {string} sheetName 
+ * @param {object} authClient 
  */
-export async function getSheets(authClient: OAuth2Client, { sheetName }: GoogleSheetFuncParam) {
+export async function listFiles(authClient: OAuth2Client, query: drive_v3.Params$Resource$Files$List) {
   const request = {
-    q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${sheetName}'`,
+    ...query,
     auth: authClient
   };
 
-  const { data } = await drive.files.list(request)
-  return data.files
+  return await drive.files.list(request)
 }
 
 /**
+ * Delete sheet
  * 
- * @param authClient 
- * @param param1 
+ * @param {object} authClient 
  */
-export async function readSheet(authClient: OAuth2Client, { sheetId }: GoogleSheetFuncParam) {
+export async function deleteSheet(authClient: OAuth2Client, query: drive_v3.Params$Resource$Files$Delete) {
   const request = {
-    spreadsheetId: sheetId,
-    range,
+    ...query,
+    auth: authClient
+  }
+
+  return await drive.files.delete(request)
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Sheets API
+
+/**
+ * Create sheet 
+ * 
+ * @param {object} authClient 
+ */
+export async function createSheet(authClient: OAuth2Client, query: sheets_v4.Params$Resource$Spreadsheets$Create) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.create(request)
+}
+
+/**
+ * Get sheet 
+ * 
+ * @param {object} authClient 
+ */
+export async function getSheet(authClient: OAuth2Client, query: sheets_v4.Params$Resource$Spreadsheets$Values$Get) {
+  const request = {
+    ...query,
     auth: authClient
   };
 
-  const { data } = await sheets.spreadsheets.values.get(request)
-  return data.values
+  return await sheets.spreadsheets.values.get(request)
 }
 
 /**
+ * Batch Read 
  * 
- * @param authClient 
- * @param param1 
+ * @param {object} authClient 
+ * @param {object} query
  */
-export async function batchReadSheet(authClient: OAuth2Client, { sheetId }: GoogleSheetFuncParam) {
+export async function batchGetSheet(authClient: OAuth2Client, query: sheets_v4.Params$Resource$Spreadsheets$Values$Batchget) {
   const request = {
-    spreadsheetId: sheetId,
-    range,
+    ...query,
     auth: authClient
   };
 
-  const { data } = await sheets.spreadsheets.values.get(request)
-  return data.values
+  return await sheets.spreadsheets.values.batchGet(request)
 }
 
 /**
- * WIP 
+ * Delete previous sheet and create new sheet 
  * 
- * @param {string} sheetName
- * @param {object} data
+ * @param {object} authClient
+ * @param {string} previousSheetId
+ * @param {object} query
  */
-export function createSheet(authClient: OAuth2Client, { sheetName, data }: GoogleSheetFuncParam) {
-  // sheets.spreadsheets.create
-}
-
-/**
- * WIP
- * 
- * @param {string} sheetName 
- */
-export function deleteSheet(authClient: OAuth2Client, { sheetName }: GoogleSheetFuncParam) {
-  // DELETE https://www.googleapis.com/drive/v3/files/{fileId}
-}
-
-/**
- * WIP 
- * 
- * @param {string} sheetName
- * @param {object} data
- */
-export function updateSheets(authClient: OAuth2Client, { sheetName, data }: GoogleSheetFuncParam) {
-
-}
-
-/**
- * WIP 
- * 
- * @param authClient 
- */
-export function uploadJSONToDrive(authClient: OAuth2Client) {
-
+export async function replaceSheet(authClient: OAuth2Client, previousSheetId: string, newSheetQuery: sheets_v4.Params$Resource$Spreadsheets$Create) {
+  return await Promise.all([
+    deleteSheet(authClient, { fileId: previousSheetId }),
+    createSheet(authClient, newSheetQuery)
+  ])
 }

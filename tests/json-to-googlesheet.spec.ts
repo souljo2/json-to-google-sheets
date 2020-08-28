@@ -1,7 +1,7 @@
 import readline from 'readline'
 import mockStdIn from 'mock-stdin'
 
-import JSONToGoogleSheet from '../../src/JSONToGoogleSheet'
+import JSONToGoogleSheet from '../src/JSONToGoogleSheet'
 
 describe('JSONToGoogleSheet', () => {
   let jsonToGoogleSheet: JSONToGoogleSheet

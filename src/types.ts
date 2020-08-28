@@ -31,12 +31,6 @@ export type AuthTokenProps = {
   id_token?: string;
 }
 
-export type GoogleSheetFuncParam = {
-  sheetId?: string
-  sheetName?: string
-  data?: JSONData
-}
-
 export type JSONToGoogleSheetParam = {
   isCachedTokenRequired: boolean
 }
