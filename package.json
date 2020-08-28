@@ -1,5 +1,5 @@
 {
-  "name": "json-to-google-sheets",
+  "name": "json-to-google-api-helper",
   "version": "1.0.0",
   "description": "Using Sheets API for uploading/downloading JSON files",
   "main": "dist/index.js",

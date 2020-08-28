@@ -1,4 +1,4 @@
-import { OAuth2Client } from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library'
 
 export type JSONData = {
   [key: string]: string | JSONData
@@ -10,8 +10,9 @@ export type WriteJSONFileOption = {
 }
 
 export const enum GoogleAPIScopes {
-  SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets",
-  DRIVE_SCOPE = "https://www.googleapis.com/auth/drive"
+  SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets',
+  DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive',
+  DRIVE_FILE_SCOPE = 'https://www.googleapis.com/auth/drive.file'
 }
 
 export type TaskFunction<T> = (oAuth2Client: OAuth2Client, param?: any) => Promise<T>
