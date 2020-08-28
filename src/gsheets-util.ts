@@ -1,4 +1,4 @@
-import { google, drive_v3, sheets_v4 } from 'googleapis'
+import { google, drive_v3 as Drive3, sheets_v4 as Sheets4 } from 'googleapis'
 import { OAuth2Client } from 'google-auth-library'
 
 const sheets = google.sheets('v4')
@@ -6,7 +6,7 @@ const drive = google.drive('v3')
 
 export type ReplaceSheetQuery = {
   previousSheetId: string,
-  query: sheets_v4.Params$Resource$Spreadsheets$Create
+  query: Sheets4.Params$Resource$Spreadsheets$Create
 }
 
 /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ export type ReplaceSheetQuery = {
  *
  * @param {object} authClient
  */
-export async function listFiles (authClient: OAuth2Client, query: drive_v3.Params$Resource$Files$List) {
+export async function listFiles (authClient: OAuth2Client, query: Drive3.Params$Resource$Files$List) {
   const request = {
     ...query,
     auth: authClient
@@ -31,7 +31,7 @@ export async function listFiles (authClient: OAuth2Client, query: drive_v3.Param
  *
  * @param {object} authClient
  */
-export async function deleteSheet (authClient: OAuth2Client, query: drive_v3.Params$Resource$Files$Delete) {
+export async function deleteSheet (authClient: OAuth2Client, query: Drive3.Params$Resource$Files$Delete) {
   const request = {
     ...query,
     auth: authClient
@@ -48,7 +48,7 @@ export async function deleteSheet (authClient: OAuth2Client, query: drive_v3.Par
  *
  * @param {object} authClient
  */
-export async function createSheet (authClient: OAuth2Client, query: sheets_v4.Params$Resource$Spreadsheets$Create) {
+export async function createSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Create) {
   const request = {
     ...query,
     auth: authClient
@@ -62,7 +62,7 @@ export async function createSheet (authClient: OAuth2Client, query: sheets_v4.Pa
  *
  * @param {object} authClient
  */
-export async function getSheet (authClient: OAuth2Client, query: sheets_v4.Params$Resource$Spreadsheets$Values$Get) {
+export async function getSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Get) {
   const request = {
     ...query,
     auth: authClient
@@ -77,7 +77,7 @@ export async function getSheet (authClient: OAuth2Client, query: sheets_v4.Param
  * @param {object} authClient
  * @param {object} query
  */
-export async function batchGetSheet (authClient: OAuth2Client, query: sheets_v4.Params$Resource$Spreadsheets$Values$Batchget) {
+export async function batchGetSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchget) {
   const request = {
     ...query,
     auth: authClient

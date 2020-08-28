@@ -24,10 +24,6 @@ class JSONToGoogleSheet {
     return this._isCachedTokenRequired
   }
 
-  set oAuth2Client (oAuth2Client: OAuth2Client) {
-    this._oAuth2Client = oAuth2Client
-  }
-
   /**
    * Get authToken from local json file
    *
@@ -63,7 +59,7 @@ class JSONToGoogleSheet {
     // CLI - authenticatation
     console.info('\n> Authorize user app by visiting this url:', authUrl)
 
-    return new Promise((rseolve, reject) => {
+    return new Promise((resolve, reject) => {
       const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
@@ -89,7 +85,7 @@ class JSONToGoogleSheet {
             }
           }
 
-          rseolve(oAuth2Client)
+          resolve(oAuth2Client)
         })
       })
     })

@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import http from 'http'
 
-import JSONToGoogleSheet from '../src'
+import { JSONToGoogleSheet } from '../src'
 import credential from './res/credential.json'
 
 function runHTTPServer() {

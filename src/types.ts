@@ -24,11 +24,16 @@ export type CredentialProps = {
 }
 
 export type AuthTokenProps = {
+  // eslint-disable-next-line
   refresh_token?: string;
+  // eslint-disable-next-line
   expiry_date?: number;
+  // eslint-disable-next-line
   access_token?: string;
   scope?: string;
+  // eslint-disable-next-line
   token_type?: string;
+  // eslint-disable-next-line
   id_token?: string;
 }
 

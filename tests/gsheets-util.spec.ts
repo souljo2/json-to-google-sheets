@@ -8,7 +8,8 @@ import {
   deleteQuery,
   replaceQuery
 } from './test-query'
-import JSONToGoogleSheet, {
+import {
+  JSONToGoogleSheet,
   listFiles,
   deleteSheet,
   createSheet,
