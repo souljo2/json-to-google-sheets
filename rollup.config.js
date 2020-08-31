@@ -28,7 +28,12 @@ export default [
     input: 'src/index.ts',
     output: {
       file: 'dist/index.js',
-      format: 'umd'
+      format: 'umd',
+      name: 'bundle',
+      globals: {
+        googleapis: 'googleapis',
+        flat: 'flat'
+      }
     },
     plugins,
     external
