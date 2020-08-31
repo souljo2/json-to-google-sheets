@@ -60,9 +60,7 @@ describe('i18n-util', () => {
     ]
 
     const testJSONData = {
-      'test.test1': 'EN1',
-      'test.test2': 'EN2',
-      'test.test3': 'Updated EN1',
+      'test.test1': 'Updated EN1',
       'test.test4': 'Updated EN2',
       'test.test5': 'Updated EN3',
       'test2.test1': 'EN3',
@@ -74,21 +72,32 @@ describe('i18n-util', () => {
       'test3.test3': 'Updated EN8',
     }
 
-    const testAnswer = [
-      ["key", "en-US", "ko-KR", "zh-CN"],
-      ["test.test1", "EN1", "KO1", ""],
-      ["test.test2", "EN2", "", "ZH1"],
-      ["test2.test1", "EN3", "", ""],
-      ["test2.test2", "EN4", "KO2", "ZH2"],
-      ["test.test3", "Updated EN1", "", ""],
-      ["test.test4", "Updated EN2", "", ""],
-      ["test.test5", "Updated EN3", "", ""],
-      ["test2.test3", "Updated EN4", "", ""],
-      ["test2.test4", "Updated EN5", "", ""],
-      ["test3.test1", "Updated EN6", "", ""],
-      ["test3.test2", "Updated EN7", "", ""],
-      ["test3.test3", "Updated EN8", "", ""]
-    ]
+    const testAnswer = {
+      updatedKeys: [
+        'test.test1',
+        'test.test4',
+        'test.test5',
+        'test2.test3',
+        'test2.test4',
+        'test3.test1',
+        'test3.test2',
+        'test3.test3',
+      ],
+      updatedRowIndexes: [0, 3, 4, 5, 6, 7, 8, 9],
+      sheet: [
+        ["key", "en-US", "ko-KR", "zh-CN"],
+        ["test.test1", "Updated EN1", "KO1", ""],
+        ["test2.test1", "EN3", "", ""],
+        ["test2.test2", "EN4", "KO2", "ZH2"],
+        ["test.test4", "Updated EN2", "", ""],
+        ["test.test5", "Updated EN3", "", ""],
+        ["test2.test3", "Updated EN4", "", ""],
+        ["test2.test4", "Updated EN5", "", ""],
+        ["test3.test1", "Updated EN6", "", ""],
+        ["test3.test2", "Updated EN7", "", ""],
+        ["test3.test3", "Updated EN8", "", ""]
+      ]
+    }
 
     expect(mergeJSONWithSheetData(testSheetData, testJSONData, 'en-US')).toStrictEqual(testAnswer)
   })

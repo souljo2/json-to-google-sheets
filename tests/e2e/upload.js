@@ -63,7 +63,7 @@ async function getSpreadSheetData ( jsonToGoogleSheet, id ) {
 }
 
 async function upload ( jsonToGoogleSheet, spreadSheetId, sheetData, localData ) {
-  const mergedData = JG.mergeJSONWithSheetData( sheetData, localData, 'en-US' )
+  const { updatedKeys, updatedRowIndexes, sheet: mergedData } = JG.mergeJSONWithSheetData( sheetData, localData, 'en-US' )
 
   // Clear
   let query = {
