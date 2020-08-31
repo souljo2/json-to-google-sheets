@@ -1,7 +1,7 @@
 import { OAuth2Client } from 'google-auth-library'
 
 export type JSONData = {
-  [key: string]: string | JSONData
+  [key: string]: string | number | JSONData
 }
 
 export type WriteJSONFileOption = {
@@ -40,3 +40,5 @@ export type AuthTokenProps = {
 export type JSONToGoogleSheetParam = {
   isCachedTokenRequired: boolean
 }
+
+export type SheetData = string[][]

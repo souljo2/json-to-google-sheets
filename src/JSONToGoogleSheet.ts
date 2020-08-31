@@ -8,16 +8,12 @@ import { GoogleAPIScopes, TaskFunction, CredentialProps, AuthTokenProps, JSONToG
 const TOKEN_PATH = 'token.json'
 
 class JSONToGoogleSheet {
-  private _scope: string = GoogleAPIScopes.DRIVE_FILE_SCOPE
+  private _scopes: GoogleAPIScopes[] = [GoogleAPIScopes.DRIVE_SCOPE, GoogleAPIScopes.SHEETS_SCOPE]
   private _oAuth2Client?: OAuth2Client
   private _isCachedTokenRequired: boolean
 
   constructor (jsonToGoogleSheetParam?: JSONToGoogleSheetParam) {
     this._isCachedTokenRequired = jsonToGoogleSheetParam?.isCachedTokenRequired || false
-  }
-
-  get scope (): string {
-    return this._scope
   }
 
   get isCachedTokenRequired (): boolean {
@@ -52,7 +48,7 @@ class JSONToGoogleSheet {
   private async _genNewToken (oAuth2Client: OAuth2Client): Promise<OAuth2Client> {
     const authUrl = oAuth2Client.generateAuthUrl({
       access_type: 'offline',
-      scope: this.scope,
+      scope: this._scopes,
       prompt: 'consent'
     })
 

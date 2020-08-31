@@ -12,7 +12,9 @@
     "prebuild": "yarn lint",
     "build": "npx rollup -c",
     "lint": "eslint --fix --ext ts src",
-    "token-gen": "ts-node tests/test-create-token.ts"
+    "token-gen": "ts-node tests/test-create-token.ts",
+    "e2e:upload": "node tests/e2e/upload.js",
+    "e2e:download": "node tests/e2e/download.js"
   },
   "devDependencies": {
     "@babel/core": "7.11.4",

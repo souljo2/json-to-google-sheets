@@ -2,6 +2,9 @@
 ---
 > Using Sheets API for uploading/downloading JSON files.
 
+## Get Credentials
+https://console.developers.google.com/apis/credentials
+
 ## Install
 ---
 ```

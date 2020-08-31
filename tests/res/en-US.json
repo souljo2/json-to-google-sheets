@@ -10,8 +10,11 @@
     "hour": "Hour",
     "minute": "Minute",
     "second": {
-      "second": "Second",
-      "milli": "milliseconds"
+      "second": "Second"
     }
+  },
+  "calc": {
+    "add": "Add",
+    "multiple": "Multiple"
   }
 }

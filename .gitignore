@@ -4,3 +4,4 @@ token.json
 tests/res/en-US-result.json
 tests/res/en-US-raw-result.json
 tests/res/credential.json
+tests/e2e/result

@@ -21,6 +21,9 @@ const external = [
   ...Object.keys( pkg.dependencies || {} ),
   ...Object.keys( pkg.devDependencies || {} ),
   ...Object.keys( pkg.peerDependencies || {} ),
+  'fs',
+  'path',
+  'readline'
 ]
 
 export default [
@@ -32,7 +35,10 @@ export default [
       name: 'bundle',
       globals: {
         googleapis: 'googleapis',
-        flat: 'flat'
+        flat: 'flat',
+        fs: 'fs',
+        path: 'path',
+        readline: 'readline'
       }
     },
     plugins,

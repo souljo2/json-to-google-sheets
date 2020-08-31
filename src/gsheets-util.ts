@@ -87,15 +87,31 @@ export async function batchGetSheet (authClient: OAuth2Client, query: Sheets4.Pa
 }
 
 /**
- * Delete previous sheet and create new sheet
+ * Clear spreadsheet
  *
  * @param {object} authClient
- * @param {string} previousSheetId
  * @param {object} query
  */
-export async function replaceSheet (authClient: OAuth2Client, { previousSheetId, query }: ReplaceSheetQuery) {
-  return await Promise.all([
-    deleteSheet(authClient, { fileId: previousSheetId }),
-    createSheet(authClient, query)
-  ])
+export async function clearSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Clear) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.values.clear(request)
+}
+
+/**
+ * Batch update spreadsheet
+ *
+ * @param {object} authClient
+ * @param {object} query
+ */
+export async function updateSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Update) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.values.update(request)
 }
