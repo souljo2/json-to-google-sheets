@@ -1,13 +1,19 @@
 {
-  "name": "json-to-google-api-helper",
+  "name": "json-to-google-sheets",
   "version": "1.0.0",
   "description": "Using Sheets API for uploading/downloading JSON files",
+  "keywords":[
+    "json-to-google-api",
+    "google-api-wrapper"
+  ],
   "main": "dist/index.js",
   "types" : "dist/index.d.ts",
-  "repository": "https://github.com/souljo2/json-to-google-sheets.git",
+  "repository": {
+    "url": "https://github.com/souljo2/json-to-google-sheets.git",
+    "type": "git"
+  },
   "author": "souljo2 <soulj.oh2@gmail.com>",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "test": "jest",
     "prebuild": "yarn lint",

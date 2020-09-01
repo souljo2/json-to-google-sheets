@@ -1,14 +1,16 @@
 # json-to-google-sheets
 > Using Google APIs for uploading/downloading JSON files.  
 > It will help you to sync your json data with google sheet. :)
-  
+
 ## Install
-```bash
+WIP  
+<!-- ```bash
 $ yarn add -d json-to-google-sheets
-```
+``` -->
   
 ## Usage
-```typescript
+WIP
+<!-- ```typescript
 const JG = require( 'json-to-google-sheets' )
 
 const jsonToGoogleSheet = new JG.JSONToGoogleSheet( { 
@@ -28,7 +30,7 @@ const { data: resCreateSheet } = await jsonToGoogleSheet.invokeTask(
   <GOOGLE-SHEET-UTIL>, 
   <QUERY>
 )
-```
+``` -->
   
 ## API references
 1. Get Credentials  
@@ -41,4 +43,4 @@ https://developers.google.com/sheets/api/reference/rest
 https://developers.google.com/drive/api/v3/about-sdk
 
 ## License
-MIT © [souljo2](https://github.com/souljo2)
+MIT Licensed
