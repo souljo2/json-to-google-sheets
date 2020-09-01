@@ -56,21 +56,31 @@ async function getSpreadSheetData ( jsonToGoogleSheet, id ) {
     range: SHEET_NAME,
     majorDimension: 'ROWS',
   }
-  const { data } = await jsonToGoogleSheet.invokeTask( JG.getSheet, query )
-  if ( !data.values ) return [ [ 'key', ...DEFAULT_LOCALES ] ]
+  const { data } = await jsonToGoogleSheet.invokeTask( JG.getSheetValues, query )
+  if ( !data.values ) return [ [ 'STATUS', 'KEY', ...DEFAULT_LOCALES ] ]
   if ( typeof data.values[ 0 ] === 'string' ) return [ data.values ]
   return data.values
 }
 
-async function upload ( jsonToGoogleSheet, spreadSheetId, sheetData, localData ) {
-  const { updatedKeys, updatedRowIndexes, sheet: mergedData } = JG.mergeJSONWithSheetData( sheetData, localData, 'en-US' )
+async function clearSheet ( jsonToGoogleSheet, spreadsheetId ) {
+  const query = {
+    spreadsheetId,
+    range: SHEET_NAME
+  }
+  await jsonToGoogleSheet.invokeTask( JG.clearSheetValues, query )
+}
+
+async function updateSheet ( jsonToGoogleSheet, spreadSheetId, sheetData, localData ) {
+  const { sheet: mergedData, deleted } = JG.mergeJSONWithSheetData( sheetData, localData, 'en-US' )
 
   // Clear
   let query = {
     spreadsheetId: spreadSheetId,
     range: SHEET_NAME
   }
-  await jsonToGoogleSheet.invokeTask( JG.clearSheet, query )
+  await jsonToGoogleSheet.invokeTask( JG.clearSheetValues, query )
+
+  console.log(deleted)
 
   // Update
   query = {
@@ -79,11 +89,11 @@ async function upload ( jsonToGoogleSheet, spreadSheetId, sheetData, localData )
     valueInputOption: "USER_ENTERED",
     resource: {
       majorDimension: "ROWS",
-      values: mergedData
+      values: [ ...mergedData, ...deleted ]
     }
   }
 
-  await jsonToGoogleSheet.invokeTask( JG.updateSheet, query )
+  await jsonToGoogleSheet.invokeTask( JG.updateSheetValues, query )
 }
 
 async function runTest () {
@@ -92,7 +102,8 @@ async function runTest () {
     const localData = await getLocaleData()
     const spreadSheetId = await getSpreadSheetId( jsonToGoogleSheet, FILE_NAME )
     const sheetData = await getSpreadSheetData( jsonToGoogleSheet, spreadSheetId )
-    await upload( jsonToGoogleSheet, spreadSheetId, sheetData, localData )
+    await clearSheet( jsonToGoogleSheet, spreadSheetId )
+    await updateSheet( jsonToGoogleSheet, spreadSheetId, sheetData, localData )
   } catch ( e ) {
     console.error( e )
     process.exit( -1 )

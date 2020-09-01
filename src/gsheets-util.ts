@@ -27,11 +27,11 @@ export async function listFiles (authClient: OAuth2Client, query: Drive3.Params$
 }
 
 /**
- * Delete sheet
+ * Delete files
  *
  * @param {object} authClient
  */
-export async function deleteSheet (authClient: OAuth2Client, query: Drive3.Params$Resource$Files$Delete) {
+export async function deleteFiles (authClient: OAuth2Client, query: Drive3.Params$Resource$Files$Delete) {
   const request = {
     ...query,
     auth: authClient
@@ -58,11 +58,41 @@ export async function createSheet (authClient: OAuth2Client, query: Sheets4.Para
 }
 
 /**
+ * Batch update sheet
+ *
+ * @param {object} authClient
+ * @param {object} query
+ */
+export async function batchUpdateSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Batchupdate) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.batchUpdate(request)
+}
+
+/**
  * Get sheet
  *
  * @param {object} authClient
+ * @param {object} query
  */
-export async function getSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Get) {
+export async function getSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Get) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.get(request)
+}
+
+/**
+ * Get sheet values
+ *
+ * @param {object} authClient
+ */
+export async function getSheetValues (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Get) {
   const request = {
     ...query,
     auth: authClient
@@ -72,12 +102,12 @@ export async function getSheet (authClient: OAuth2Client, query: Sheets4.Params$
 }
 
 /**
- * Batch Read
+ * Batch get sheet values
  *
  * @param {object} authClient
  * @param {object} query
  */
-export async function batchGetSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchget) {
+export async function batchGetSheetValues (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchget) {
   const request = {
     ...query,
     auth: authClient
@@ -87,12 +117,12 @@ export async function batchGetSheet (authClient: OAuth2Client, query: Sheets4.Pa
 }
 
 /**
- * Clear spreadsheet
+ * Clear sheet values
  *
  * @param {object} authClient
  * @param {object} query
  */
-export async function clearSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Clear) {
+export async function clearSheetValues (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Clear) {
   const request = {
     ...query,
     auth: authClient
@@ -102,12 +132,12 @@ export async function clearSheet (authClient: OAuth2Client, query: Sheets4.Param
 }
 
 /**
- * Batch update spreadsheet
+ * Update sheet values
  *
  * @param {object} authClient
  * @param {object} query
  */
-export async function updateSheet (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Update) {
+export async function updateSheetValues (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Update) {
   const request = {
     ...query,
     auth: authClient

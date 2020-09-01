@@ -61,8 +61,8 @@ async function getSpreadSheetData ( jsonToGoogleSheet, id ) {
     range: SHEET_NAME,
     majorDimension: 'ROWS',
   }
-  const { data } = await jsonToGoogleSheet.invokeTask( JG.getSheet, query )
-  if ( !data.values ) return [ [ 'key', ...DEFAULT_LOCALES ] ]
+  const { data } = await jsonToGoogleSheet.invokeTask( JG.getSheetValues, query )
+  if ( !data.values ) return [ [ 'STATUS', 'KEY', ...DEFAULT_LOCALES ] ]
   if ( typeof data.values[ 0 ] === 'string' ) return [ data.values ]
   return data.values
 }

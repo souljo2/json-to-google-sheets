@@ -7,13 +7,14 @@ import { JSONData, SheetData } from './types'
  * @param {object} jsonData
  * @param {string} representativeLocale
  */
-export function mergeJSONWithSheetData(sheetData: SheetData, jsonData: JSONData, representativeLocale: string) {
+export function mergeJSONWithSheetData (sheetData: SheetData, jsonData: JSONData, representativeLocale: string) {
   const [header, ...sheetRows] = sheetData
-  const [, ...headerRow] = header
+  const [/* STATUS */, /* KEY */, ...headerRow] = header
   const localeIndexes: JSONData = {}
   const result: JSONData = {}
   const updatedKeys: string[] = []
-  const updatedRowIndexes: number[] = []
+  const newKeys: string[] = []
+  const deletedKeys: string[] = []
 
   headerRow.forEach((locale, index) => {
     localeIndexes[locale] = index
@@ -21,38 +22,42 @@ export function mergeJSONWithSheetData(sheetData: SheetData, jsonData: JSONData,
   })
 
   sheetRows.forEach((sheetRow) => {
-    const [i18nKey, ...valueByLocales] = sheetRow
+    const [status, i18nKey, ...valueByLocales] = sheetRow
 
-    if (jsonData[i18nKey]) {
-      valueByLocales.forEach((value, index) => {
-        const locale = headerRow[index] as string
+    if (status !== 'DELETED') {
+      if (jsonData[i18nKey]) {
+        valueByLocales.forEach((value, index) => {
+          const locale = headerRow[index] as string
 
-        if (locale === representativeLocale) {
-          if (jsonData[i18nKey] !== value) {
-            updatedKeys.push(i18nKey)
+          if (locale === representativeLocale) {
+            if (jsonData[i18nKey] !== value) {
+              updatedKeys.push(i18nKey)
+            }
+
+            (result[locale] as JSONData)[i18nKey] = jsonData[i18nKey]
+          } else {
+            (result[locale] as JSONData)[i18nKey] = value || ''
           }
+        })
 
-          (result[locale] as JSONData)[i18nKey] = jsonData[i18nKey]
-        } else {
-          (result[locale] as JSONData)[i18nKey] = value || ''
+        let emptyLoopCount = headerRow.length - valueByLocales.length
+        while (emptyLoopCount) {
+          const locale = headerRow[valueByLocales.length + emptyLoopCount - 1] as string
+          (result[locale] as JSONData)[i18nKey] = ''
+          emptyLoopCount--
         }
-      })
 
-      let emptyLoopCount = headerRow.length - valueByLocales.length
-      while (emptyLoopCount) {
-        const locale = headerRow[valueByLocales.length + emptyLoopCount - 1] as string
-        (result[locale] as JSONData)[i18nKey] = ''
-        emptyLoopCount--
+        // 마크한 Key는 삭제
+        delete jsonData[i18nKey]
+      } else {
+        deletedKeys.push(i18nKey)
       }
-
-      // 마크한 Key는 삭제
-      delete jsonData[i18nKey]
     }
   })
 
   // New i18n keys
   for (const i18nKey in jsonData) {
-    updatedKeys.push(i18nKey)
+    newKeys.push(i18nKey)
 
     for (const locale in localeIndexes) {
       (result[locale] as JSONData)[i18nKey] = representativeLocale === locale ? jsonData[i18nKey] : ''
@@ -61,12 +66,17 @@ export function mergeJSONWithSheetData(sheetData: SheetData, jsonData: JSONData,
 
   const updatedSheetRows: string[][] = []
   for (const i18nKey in result[representativeLocale] as JSONData) {
-    const row = [i18nKey]
+    const row: string[] = []
 
-    if (updatedKeys.includes(i18nKey)) {
-      updatedRowIndexes.push(updatedSheetRows.length)
-    }
+    // Set status
+    if (newKeys.includes(i18nKey)) row.push('NEW')
+    else if (updatedKeys.includes(i18nKey)) row.push('UPDATED')
+    else row.push('-')
 
+    // Set key
+    row.push(i18nKey)
+
+    // Set values by locales
     for (const locale in localeIndexes) {
       row.push(((result[locale] as JSONData)[i18nKey]) as string)
     }
@@ -75,9 +85,8 @@ export function mergeJSONWithSheetData(sheetData: SheetData, jsonData: JSONData,
   }
 
   return {
-    updatedKeys,
-    updatedRowIndexes,
-    sheet: [header, ...updatedSheetRows]
+    sheet: [header, ...updatedSheetRows.sort((firstRow, secondRow) => firstRow[1].localeCompare(secondRow[1]))],
+    deleted: deletedKeys.map((deletedKey) => ['DELETED', deletedKey])
   }
 }
 
@@ -86,9 +95,9 @@ export function mergeJSONWithSheetData(sheetData: SheetData, jsonData: JSONData,
  *
  * @param {object} sheetData
  */
-export function getJSONFromSheetData(sheetData: SheetData) {
+export function getJSONFromSheetData (sheetData: SheetData) {
   const [header, ...sheetRows] = sheetData
-  const [, ...headerRow] = header
+  const [/* STATUS */, /* KEY */, ...headerRow] = header
   const localeIndexes: JSONData = {}
   const result: JSONData = {}
 
@@ -98,17 +107,19 @@ export function getJSONFromSheetData(sheetData: SheetData) {
   })
 
   sheetRows.forEach((sheetRow) => {
-    const [i18nKey, ...valueByLocales] = sheetRow
-    valueByLocales.forEach((value, index) => {
-      const locale = headerRow[index] as string
-      (result[locale] as JSONData)[i18nKey] = value
-    })
+    const [status, i18nKey, ...valueByLocales] = sheetRow
+    if (status !== 'DELETED') {
+      valueByLocales.forEach((value, index) => {
+        const locale = headerRow[index] as string
+        (result[locale] as JSONData)[i18nKey] = value
+      })
 
-    let emptyLoopCount = headerRow.length - valueByLocales.length
-    while (emptyLoopCount) {
-      const locale = headerRow[valueByLocales.length + emptyLoopCount - 1] as string
-      (result[locale] as JSONData)[i18nKey] = ''
-      emptyLoopCount--
+      let emptyLoopCount = headerRow.length - valueByLocales.length
+      while (emptyLoopCount) {
+        const locale = headerRow[valueByLocales.length + emptyLoopCount - 1] as string
+        (result[locale] as JSONData)[i18nKey] = ''
+        emptyLoopCount--
+      }
     }
   })
 

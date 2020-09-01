@@ -6,15 +6,11 @@
       "have_a_gday": "Have a good day"
     }
   },
-  "time": {
-    "hour": "Hour",
-    "minute": "Minute",
-    "second": {
-      "second": "Second"
-    }
-  },
   "calc": {
-    "add": "Add",
-    "multiple": "Multiple"
+    "sum": "Sum 123",
+    "minus": "Minus",
+    "plus": "Plus",
+    "multiple": "Multiple",
+    "divide":"Divide"
   }
 }
