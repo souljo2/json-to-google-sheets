@@ -9,8 +9,8 @@
   "main": "dist/index.js",
   "types" : "dist/index.d.ts",
   "repository": {
-    "url": "https://github.com/souljo2/json-to-google-sheets.git",
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/souljo2/json-to-google-sheets.git"
   },
   "author": "souljo2 <soulj.oh2@gmail.com>",
   "license": "MIT",

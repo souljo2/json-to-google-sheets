@@ -3,14 +3,12 @@
 > It will help you to sync your json data with google sheet. :)
 
 ## Install
-WIP  
-<!-- ```bash
+```bash
 $ yarn add -d json-to-google-sheets
-``` -->
+```
   
 ## Usage
-WIP
-<!-- ```typescript
+```typescript
 const JG = require( 'json-to-google-sheets' )
 
 const jsonToGoogleSheet = new JG.JSONToGoogleSheet( { 
@@ -30,7 +28,7 @@ const { data: resCreateSheet } = await jsonToGoogleSheet.invokeTask(
   <GOOGLE-SHEET-UTIL>, 
   <QUERY>
 )
-``` -->
+```
   
 ## API references
 1. Get Credentials  
