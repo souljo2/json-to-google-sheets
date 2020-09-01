@@ -1,13 +1,13 @@
-import fs from 'fs'
-import path from 'path'
-import http from 'http'
+const fs = require('fs')
+const path = require('path')
+const http = require('http')
 
-import { JSONToGoogleSheet } from '../src'
-import credential from './res/credential.json'
+const JG = require( '../../dist/index' )
+const credential = require( '../../credential.json' )
 
 function runHTTPServer() {
-  const server = http.createServer((request, response) => {
-    const pagePath = path.resolve(__dirname, './res/index.html')
+  const server = http.createServer((_, response) => {
+    const pagePath = path.resolve(__dirname, './index.html')
     const page = fs.readFileSync(pagePath)
 
     response.write(page);
@@ -20,10 +20,10 @@ function runHTTPServer() {
 
 async function genAuthToken() {
   const server = runHTTPServer()
-  const jsonToGoogleSheet = new JSONToGoogleSheet({ isCachedTokenRequired: true })
+  const jsonToGoogleSheet = new JG.JSONToGoogleSheet({ isCachedTokenRequired: true })
 
   try {
-    // [1] Authorize
+    // Authorize
     await jsonToGoogleSheet.authorize({
       clientId: credential.clientId,
       clientSecret: credential.clientSecret,

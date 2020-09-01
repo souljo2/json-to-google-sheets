@@ -1,22 +1,11 @@
 const JG = require( '../../dist/index' )
-const credential = require( '../res/credential.json' )
+const credential = require( '../../credential.json' )
 const path = require( 'path' )
-const fs = require('fs')
+const fs = require( 'fs' )
 
 const FILE_NAME = 'i18n-test'
 const SHEET_NAME = 'dictionary'
 const DEFAULT_LOCALES = [ 'en-US', 'ko-KR', 'zh-CN' ]
-
-function cleanPreviousResult () {
-  const resultPath = path.resolve(__dirname, `./result`)
-  if (fs.existsSync(resultPath)) {
-    const files = fs.readdirSync(resultPath)
-    files.forEach((file) => {
-      const filePath = path.resolve(__dirname, `./result/${file}`)
-      fs.unlinkSync(filePath)
-    })
-  }
-}
 
 async function authorize () {
   const jsonToGoogleSheet = new JG.JSONToGoogleSheet( { isCachedTokenRequired: true } )
@@ -28,6 +17,12 @@ async function authorize () {
   } )
 
   return jsonToGoogleSheet
+}
+
+async function getLocaleData () {
+  const localePath = path.resolve( __dirname, './en-US.json' )
+  const locale = fs.readFileSync( localePath )
+  return JG.getFlattedJSON( JSON.parse( locale.toString() ) )
 }
 
 async function getSpreadSheetId ( jsonToGoogleSheet, fileName ) {
@@ -67,23 +62,46 @@ async function getSpreadSheetData ( jsonToGoogleSheet, id ) {
   return data.values
 }
 
-async function writeJSONFiles (sheetData) {
-  const jsonData = JG.getJSONFromSheetData(sheetData)
-  const locales = Object.keys(jsonData)
+async function clearSheet ( jsonToGoogleSheet, spreadsheetId ) {
+  const query = {
+    spreadsheetId,
+    range: SHEET_NAME
+  }
+  await jsonToGoogleSheet.invokeTask( JG.clearSheetValues, query )
+}
 
-  locales.forEach((locale) => {
-    const resultFilePath = path.resolve(__dirname, `./result/${locale}.json`)
-    JG.writeJSONFile(resultFilePath, jsonData[locale])
-  })
+async function updateSheet ( jsonToGoogleSheet, spreadSheetId, sheetData, localData ) {
+  const { sheet: mergedData, deleted } = JG.mergeJSONWithSheetData( sheetData, localData, 'en-US' )
+
+  // Clear
+  let query = {
+    spreadsheetId: spreadSheetId,
+    range: SHEET_NAME
+  }
+  await jsonToGoogleSheet.invokeTask( JG.clearSheetValues, query )
+
+  // Update
+  query = {
+    spreadsheetId: spreadSheetId,
+    range: SHEET_NAME,
+    valueInputOption: "USER_ENTERED",
+    resource: {
+      majorDimension: "ROWS",
+      values: [ ...mergedData, ...deleted ]
+    }
+  }
+
+  await jsonToGoogleSheet.invokeTask( JG.updateSheetValues, query )
 }
 
 async function runTest () {
   try {
-    cleanPreviousResult()
     const jsonToGoogleSheet = await authorize()
+    const localData = await getLocaleData()
     const spreadSheetId = await getSpreadSheetId( jsonToGoogleSheet, FILE_NAME )
     const sheetData = await getSpreadSheetData( jsonToGoogleSheet, spreadSheetId )
-    await writeJSONFiles( sheetData )
+    await clearSheet( jsonToGoogleSheet, spreadSheetId )
+    await updateSheet( jsonToGoogleSheet, spreadSheetId, sheetData, localData )
   } catch ( e ) {
     console.error( e )
     process.exit( -1 )

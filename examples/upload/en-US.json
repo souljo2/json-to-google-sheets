@@ -1,0 +1,16 @@
+{
+  "greet": {
+    "hello": "Hello",
+    "bye": {
+      "good_bye": "Good bye",
+      "have_a_gday": "Have a good day"
+    }
+  },
+  "calc": {
+    "sum": "Sum 123",
+    "minus": "Minus",
+    "plus": "Plus",
+    "multiple": "Multiple",
+    "divide":"Divide"
+  }
+}
