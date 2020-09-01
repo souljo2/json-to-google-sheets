@@ -15,7 +15,8 @@
     "removeComments": true,
     "allowUnreachableCode": false,
     "strictNullChecks": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "declaration": true
   },
   "include": [
     "src/*"
