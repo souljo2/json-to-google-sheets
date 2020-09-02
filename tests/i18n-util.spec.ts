@@ -54,14 +54,14 @@ describe('i18n-util', () => {
   test('mergeJSONWithSheetData()', () => {
     const testSheetData = [
       ["STATUS", "KEY", 'en-US', 'ko-KR', 'zh-CN'],
-      ['', 'test.test1', 'EN1', 'KO1', ''],
+      ['', 'test.test1', '', '', ''],
       ['', 'test.test2', 'EN2', '', 'ZH1'],
       ['', 'test2.test1', 'EN3', '', ''],
       ['', 'test2.test2', 'EN4', 'KO2', 'ZH2'],
     ]
 
     const testJSONData = {
-      'test.test1': 'Updated EN1',
+      'test.test1': '',
       'test.test4': 'Updated EN2',
       'test.test5': 'Updated EN3',
       'test2.test1': 'EN3',
@@ -76,7 +76,7 @@ describe('i18n-util', () => {
     const testAnswer = {
       sheet: [
         ["STATUS", "KEY", "en-US", "ko-KR", "zh-CN"],
-        ["UPDATED", "test.test1", "Updated EN1", "KO1", ""],
+        ["-", "test.test1", "", "", ""],
         ["NEW", "test.test4", "Updated EN2", "", ""],
         ["NEW", "test.test5", "Updated EN3", "", ""],
         ["-", "test2.test1", "EN3", "", ""],

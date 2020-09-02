@@ -25,7 +25,7 @@ export function mergeJSONWithSheetData (sheetData: SheetData, jsonData: JSONData
     const [status, i18nKey, ...valueByLocales] = sheetRow
 
     if (status !== 'DELETED') {
-      if (jsonData[i18nKey]) {
+      if (typeof jsonData[i18nKey] !== 'undefined') {
         valueByLocales.forEach((value, index) => {
           const locale = headerRow[index] as string
 
