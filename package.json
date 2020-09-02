@@ -1,6 +1,6 @@
 {
   "name": "json-to-google-sheets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Using Sheets API for uploading/downloading JSON files",
   "keywords":[
     "json-to-google-api",
