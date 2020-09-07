@@ -11,5 +11,7 @@ export declare function batchUpdateSheet(authClient: OAuth2Client, query: Sheets
 export declare function getSheet(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Get): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$Spreadsheet>>;
 export declare function getSheetValues(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Get): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$ValueRange>>;
 export declare function batchGetSheetValues(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchget): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$BatchGetValuesResponse>>;
+export declare function batchClearSheetValues(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchclear): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$BatchClearValuesResponse>>;
+export declare function batchUpdateSheetValues(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchupdate): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$BatchUpdateValuesResponse>>;
 export declare function clearSheetValues(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Clear): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$ClearValuesResponse>>;
 export declare function updateSheetValues(authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Update): Promise<import("gaxios").GaxiosResponse<Sheets4.Schema$UpdateValuesResponse>>;
