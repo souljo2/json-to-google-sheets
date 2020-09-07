@@ -117,6 +117,36 @@ export async function batchGetSheetValues (authClient: OAuth2Client, query: Shee
 }
 
 /**
+ * Batch clear sheet values
+ *
+ * @param {object} authClient
+ * @param {object} query
+ */
+export async function batchClearSheetValues (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchclear) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.values.batchClear(request)
+}
+
+/**
+ * Batch update sheet values
+ *
+ * @param {object} authClient
+ * @param {object} query
+ */
+export async function batchUpdateSheetValues (authClient: OAuth2Client, query: Sheets4.Params$Resource$Spreadsheets$Values$Batchupdate) {
+  const request = {
+    ...query,
+    auth: authClient
+  }
+
+  return await sheets.spreadsheets.values.batchUpdate(request)
+}
+
+/**
  * Clear sheet values
  *
  * @param {object} authClient
